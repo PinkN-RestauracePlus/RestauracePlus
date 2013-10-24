@@ -1,2 +1,2 @@
-# Tým
+# Tým PinkN
 - Honza Vrátník
