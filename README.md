@@ -1,3 +1,4 @@
-# Tým PinkN
-- Honza Vrátník
+# Tï¿½m PinkN
+- Honza Vrï¿½tnï¿½k
 - Michal Stanke
+- LukÃ¡Å¡ Toman
