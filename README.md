@@ -1,4 +1,5 @@
-# T�m PinkN
-- Honza Vr�tn�k
+# Team PinkN-RestauracePlus
+- Honza Vratnik
 - Michal Stanke
 - Lukáš Toman
+- Piero Sestak
