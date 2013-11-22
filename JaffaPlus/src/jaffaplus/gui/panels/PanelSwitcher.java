@@ -1,6 +1,7 @@
 package jaffaplus.gui.panels;
 
 import jaffaplus.JaffaPlus;
+import jaffaplus.gui.panels.calendar.CalendarPanel;
 import jaffaplus.source.GlobalValues;
 
 /**
@@ -39,6 +40,10 @@ public class PanelSwitcher {
             }
             case GlobalValues.PANEL_TABLE: {
                 mainFrame.getContentPane().add(new TablePanel());
+                break;
+            }
+            case GlobalValues.PANEL_BOOKING: {
+                mainFrame.getContentPane().add(new CalendarPanel());
                 break;
             }
         }       

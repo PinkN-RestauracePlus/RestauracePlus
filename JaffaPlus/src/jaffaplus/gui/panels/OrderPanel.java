@@ -2,7 +2,7 @@ package jaffaplus.gui.panels;
 
 import jaffaplus.collections.Item;
 import jaffaplus.collections.Order;
-import jaffaplus.dialogs.AddFoodDialog;
+import jaffaplus.gui.dialogs.AddFoodDialog;
 import jaffaplus.gui.buttons.Button;
 import jaffaplus.gui.buttons.ButtonListener;
 import jaffaplus.source.GlobalValues;

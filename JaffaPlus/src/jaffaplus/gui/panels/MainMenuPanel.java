@@ -41,7 +41,7 @@ public class MainMenuPanel extends Panel {
         Panel buttonPanel = new Panel();
         
         foodOrders = new MainMenuButton("Objednávky", GlobalValues.PANEL_TABLE);
-        foodMenu = new MainMenuButton("Jídelní lístek", GlobalValues.PANEL_TABLE);
+        foodMenu = new MainMenuButton("Jídelní lístek", GlobalValues.PANEL_BOOKING);
         help = new MainMenuButton("Nápověda", GlobalValues.PANEL_TABLE);
         settings = new MainMenuButton("Nastavení", GlobalValues.PANEL_TABLE);
         

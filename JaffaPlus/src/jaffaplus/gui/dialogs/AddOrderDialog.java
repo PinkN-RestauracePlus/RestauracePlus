@@ -1,12 +1,11 @@
-package jaffaplus.dialogs;
+package jaffaplus.gui.dialogs;
 
-import jaffaplus.collections.DataStorage;
 import jaffaplus.collections.Order;
+import jaffaplus.collections.Table;
 import jaffaplus.gui.buttons.Button;
 import jaffaplus.gui.buttons.ButtonListener;
-import jaffaplus.gui.panels.FoodSelectionPanel;
-import jaffaplus.gui.panels.OrderPanel;
 import jaffaplus.gui.panels.Panel;
+import jaffaplus.gui.panels.TablePanel;
 import jaffaplus.source.GlobalValues;
 import jaffaplus.source.Path;
 import java.awt.Dimension;
@@ -18,31 +17,27 @@ import net.miginfocom.swing.MigLayout;
  *
  * @author Hanzik
  */
-public class AddFoodDialog extends JDialog {
+public class AddOrderDialog extends JDialog {
    
-    private Order order;
-    private OrderPanel panel;
+    private Table table;
+    private TablePanel panel;
     
     private Panel contentPane = new Panel();
-    private Panel searchPanel, buttonPanel;
-    private FoodSelectionPanel foodSelectionPanel;
-    
-    private JScrollPane scrollPane;
-    
+   
     private JTextField orderNameField;
     private Button confirmButton, cancelButton;
     
-    private final int FRAME_WIDTH = 400;
-    private final int FRAME_HEIGHT = 500;
+    private final int FRAME_WIDTH = 250;
+    private final int FRAME_HEIGHT = 180;
     private final int FRAME_THICKNESS = 4;
     
-    public AddFoodDialog(Order order, OrderPanel panel) {
+    public AddOrderDialog(Table table, TablePanel panel) {
         
-        this.order = order;
+        this.table = table;
         this.panel = panel;
         setContentPane(contentPane);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLocation(250, 200);
+        setLocationRelativeTo(panel);
         setModal(true);
         setResizable(false);
         setSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
@@ -58,48 +53,20 @@ public class AddFoodDialog extends JDialog {
         contentPane.setBackground(GlobalValues.BACKGROUND_COLOR_DIALOG);
         contentPane.setBorder(BorderFactory.createLineBorder(GlobalValues.BORDER_COLOR, FRAME_THICKNESS));
         
-        initSearchPanel();
-        initFoodSelectionPanel();
-        initButtonPanel();
-    }
-    
-    private void initSearchPanel() {     
+        int textFieldWidth = 150;
+        int textFieldHeight = 24;
         
-        int SEARCH_WIDTH = 400;
-        int SEARCH_FIELD_WIDTH = 300;
-        int SEARCH_HEIGHT = 20;
+        Panel textFieldPanel = new Panel();
+        textFieldPanel.setBackground(GlobalValues.BACKGROUND_COLOR_DIALOG);
         
-        searchPanel = new Panel();
-        searchPanel.setBackground(GlobalValues.BACKGROUND_COLOR_DIALOG);
-        searchPanel.setPreferredSize(new Dimension(SEARCH_WIDTH, SEARCH_HEIGHT));
+        orderNameField = new JTextField();
+        orderNameField.setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
         
-        JLabel searchLabel = new JLabel("Hledat: ");
-        JTextField searchField = new JTextField();
+        textFieldPanel.add(new JLabel("Název účtu: "));
+        textFieldPanel.add(orderNameField);
         
-        searchField.setPreferredSize(new Dimension(SEARCH_FIELD_WIDTH, SEARCH_HEIGHT));        
+        contentPane.add(textFieldPanel, "alignx center, wrap");
         
-        searchPanel.add(searchLabel);
-        searchPanel.add(searchField);
-        add(searchPanel, "wrap");
-    }
-    
-    private void initFoodSelectionPanel() {        
-        
-        int SELECTION_WIDTH = 400;
-        int SELECTION_HEIGHT = 350;
-        
-        foodSelectionPanel = new FoodSelectionPanel(DataStorage.getInstance().getFoodMenu());
-                
-        scrollPane = new JScrollPane(foodSelectionPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.getVerticalScrollBar().setUnitIncrement(GlobalValues.SCROLL_SPEED);    
-//        scrollPane.setVerticalScrollBar(...);             //prepared for custom scroll bar visuals
-        scrollPane.setPreferredSize(new Dimension(SELECTION_WIDTH, SELECTION_HEIGHT));
-        scrollPane.setBorder(BorderFactory.createLineBorder(GlobalValues.BORDER_COLOR));
-                              
-        contentPane.add(scrollPane, "alignx center, wrap");        
-    }
-    
-    private void initButtonPanel() {
         confirmButton = new Button();
         cancelButton = new Button();
         
@@ -109,26 +76,30 @@ public class AddFoodDialog extends JDialog {
         confirmButton.loadIcons(Path.BUTTONS_CONTROL_ADD_INACTIVE, Path.BUTTONS_CONTROL_ADD_ACTIVE, Path.BUTTONS_CONTROL_ADD_CLICKED);
         cancelButton.loadIcons(Path.BUTTONS_CONTROL_GOBACK_INACTIVE, Path.BUTTONS_CONTROL_GOBACK_ACTIVE, Path.BUTTONS_CONTROL_GOBACK_CLICKED);
         
-        buttonPanel = new Panel();
+        Panel buttonPanel = new Panel();
         buttonPanel.setBackground(GlobalValues.BACKGROUND_COLOR_DIALOG);
         buttonPanel.add(confirmButton);
         buttonPanel.add(cancelButton);
         
-        contentPane.add(buttonPanel, "alignx center");        
+        contentPane.add(buttonPanel, "alignx center");
     }
     
-    public void addFood() {
-        //Pokud je vybrane jidlo, pridej ho na seznam
-        if (foodSelectionPanel.getSelectedFood() != null) {
-            order.getItemList().add(foodSelectionPanel.getSelectedFood().getItem());
+    public void addOrder() {
+        int maxLength = 20;
+        String orderName = orderNameField.getText();
+        
+        if (orderName.length() > maxLength) {
+            orderName = orderName.substring(0, maxLength);            
         }
+        Order order = new Order(orderName);
+        table.addOrder(order);
         
         if (panel != null) {
             panel.repaint();
         } else {
             System.out.println("null");
         }
-    }    
+    }
     
     public void cancel() {
         dispose();
@@ -142,7 +113,8 @@ public class AddFoodDialog extends JDialog {
         
         @Override
         public void mouseReleased(MouseEvent e) {
-            addFood();
+            addOrder();
+            cancel();
         }
     }
     

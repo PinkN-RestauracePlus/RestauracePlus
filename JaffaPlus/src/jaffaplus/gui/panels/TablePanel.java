@@ -3,7 +3,7 @@ package jaffaplus.gui.panels;
 import jaffaplus.collections.DataStorage;
 import jaffaplus.collections.Order;
 import jaffaplus.collections.Table;
-import jaffaplus.dialogs.AddOrderDialog;
+import jaffaplus.gui.dialogs.AddOrderDialog;
 import jaffaplus.gui.buttons.Button;
 import jaffaplus.gui.buttons.ButtonListener;
 import jaffaplus.source.GlobalValues;
