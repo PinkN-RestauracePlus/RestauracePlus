@@ -65,4 +65,9 @@ public class Booking {
     public int getYear() {
         return year;
     }
+
+    @Override
+    public String toString() {
+        return "Booking{" + "name=" + name + ", hour=" + hour + ", day=" + day + ", month=" + month + ", year=" + year + '}';
+    }
 }

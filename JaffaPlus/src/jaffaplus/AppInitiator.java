@@ -1,5 +1,6 @@
 package jaffaplus;
 
+import jaffaplus.collections.BookingList;
 import jaffaplus.collections.DataStorage;
 import jaffaplus.collections.ItemList;
 import jaffaplus.collections.TableList;
@@ -23,8 +24,11 @@ public class AppInitiator {
         foodMenu.fillList();
         TableList tableList = new TableList();
         tableList.fillList();
+        BookingList bookingList = new BookingList();
+        bookingList.fillList();
         
         DataStorage.getInstance().setFoodMenu(foodMenu);
         DataStorage.getInstance().setTables(tableList);
+        DataStorage.getInstance().setBooking(bookingList);
     }
 }

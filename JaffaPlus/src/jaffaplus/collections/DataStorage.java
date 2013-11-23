@@ -7,9 +7,10 @@ package jaffaplus.collections;
  */
 public class DataStorage {
     
+    private BookingList booking;
     private ItemList foodMenu;
     private TableList tables;
-    
+        
     private static final DataStorage INSTANCE = new DataStorage();
         
     private DataStorage() {
@@ -36,5 +37,13 @@ public class DataStorage {
 
     public void setTables(TableList tables) {
         this.tables = tables;
+    }
+
+    public BookingList getBooking() {
+        return booking;
+    }
+
+    public void setBooking(BookingList booking) {
+        this.booking = booking;
     }
 }

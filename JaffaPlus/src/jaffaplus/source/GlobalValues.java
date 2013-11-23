@@ -15,8 +15,11 @@ public class GlobalValues {
     
     public static final Color BACKGROUND_COLOR = Color.WHITE;
     public static final Color BACKGROUND_COLOR_DIALOG = new Color(245, 245, 245);
+    public static final Color BACKGROUND_COLOR_DIALOG_DARK = new Color(230, 230, 230);
     public static final Color BACKGROUND_COLOR_SELECTED = Color.GREEN;
     public static final Color BORDER_COLOR = Color.BLACK;
+    public static final Color ERROR_COLOR = Color.RED;
+    public static final Color FONT_COLOR = Color.BLACK;
     public static final String NAME = "Jaffa Plus - WoP";
     
     /* Identifikatory panelu */

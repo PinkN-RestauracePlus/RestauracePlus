@@ -14,7 +14,7 @@ import javax.swing.JLabel;
  */
 public class MainMenuPanel extends Panel {
     
-    private MainMenuButton foodOrders, foodMenu, help, settings ;
+    private MainMenuButton foodOrders, booking, help, settings ;
     
     public MainMenuPanel() {
         
@@ -41,17 +41,17 @@ public class MainMenuPanel extends Panel {
         Panel buttonPanel = new Panel();
         
         foodOrders = new MainMenuButton("Objednávky", GlobalValues.PANEL_TABLE);
-        foodMenu = new MainMenuButton("Jídelní lístek", GlobalValues.PANEL_BOOKING);
+        booking = new MainMenuButton("Jídelní lístek", GlobalValues.PANEL_BOOKING);
         help = new MainMenuButton("Nápověda", GlobalValues.PANEL_TABLE);
         settings = new MainMenuButton("Nastavení", GlobalValues.PANEL_TABLE);
         
         foodOrders.loadIcons(Path.BUTTONS_MAINMENU_ORDERS_INACTIVE, Path.BUTTONS_MAINMENU_ORDERS_ACTIVE, Path.BUTTONS_MAINMENU_ORDERS_CLICKED);
-        foodMenu.loadIcons(Path.BUTTONS_MAINMENU_FOODMENU_INACTIVE, Path.BUTTONS_MAINMENU_FOODMENU_ACTIVE, Path.BUTTONS_MAINMENU_FOODMENU_CLICKED);
+        booking.loadIcons(Path.BUTTONS_MAINMENU_BOOKING_INACTIVE, Path.BUTTONS_MAINMENU_BOOKING_ACTIVE, Path.BUTTONS_MAINMENU_BOOKING_CLICKED);
         help.loadIcons(Path.BUTTONS_MAINMENU_HELP_INACTIVE, Path.BUTTONS_MAINMENU_HELP_ACTIVE, Path.BUTTONS_MAINMENU_HELP_CLICKED);
         settings.loadIcons(Path.BUTTONS_MAINMENU_SETTINGS_INACTIVE, Path.BUTTONS_MAINMENU_SETTINGS_ACTIVE, Path.BUTTONS_MAINMENU_SETTINGS_CLICKED);
         
         buttonPanel.add(foodOrders);
-        buttonPanel.add(foodMenu, "wrap");
+        buttonPanel.add(booking, "wrap");
         buttonPanel.add(help);
         buttonPanel.add(settings, "wrap");
         add(buttonPanel, "al center, wrap");
