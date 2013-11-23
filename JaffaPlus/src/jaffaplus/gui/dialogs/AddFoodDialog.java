@@ -12,18 +12,16 @@ import jaffaplus.source.Path;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import javax.swing.*;
-import net.miginfocom.swing.MigLayout;
 
 /**
  *
  * @author Hanzik
  */
-public class AddFoodDialog extends JDialog {
+public class AddFoodDialog extends Dialog {
    
     private Order order;
     private OrderPanel panel;
     
-    private Panel contentPane = new Panel();
     private Panel searchPanel, buttonPanel;
     private FoodSelectionPanel foodSelectionPanel;
     
@@ -34,19 +32,13 @@ public class AddFoodDialog extends JDialog {
     
     private final int FRAME_WIDTH = 400;
     private final int FRAME_HEIGHT = 500;
-    private final int FRAME_THICKNESS = 4;
     
     public AddFoodDialog(Order order, OrderPanel panel) {
         
+        super();
         this.order = order;
         this.panel = panel;
-        setContentPane(contentPane);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLocation(250, 200);
-        setModal(true);
-        setResizable(false);
         setSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
-        setUndecorated(true);
         
         initComponents();
         
@@ -54,9 +46,6 @@ public class AddFoodDialog extends JDialog {
     }
 
     private void initComponents() {
-        contentPane.setLayout(new MigLayout());
-        contentPane.setBackground(GlobalValues.BACKGROUND_COLOR_DIALOG);
-        contentPane.setBorder(BorderFactory.createLineBorder(GlobalValues.BORDER_COLOR, FRAME_THICKNESS));
         
         initSearchPanel();
         initFoodSelectionPanel();
@@ -96,28 +85,11 @@ public class AddFoodDialog extends JDialog {
         scrollPane.setPreferredSize(new Dimension(SELECTION_WIDTH, SELECTION_HEIGHT));
         scrollPane.setBorder(BorderFactory.createLineBorder(GlobalValues.BORDER_COLOR));
                               
-        contentPane.add(scrollPane, "alignx center, wrap");        
+        getContentPane().add(scrollPane, "alignx center, wrap");        
     }
     
-    private void initButtonPanel() {
-        confirmButton = new Button();
-        cancelButton = new Button();
-        
-        confirmButton.addMouseListener(new AddButtonListener(confirmButton));
-        cancelButton.addMouseListener(new CancelButtonListener(cancelButton));
-        
-        confirmButton.loadIcons(Path.BUTTONS_CONTROL_ADD_INACTIVE, Path.BUTTONS_CONTROL_ADD_ACTIVE, Path.BUTTONS_CONTROL_ADD_CLICKED);
-        cancelButton.loadIcons(Path.BUTTONS_CONTROL_GOBACK_INACTIVE, Path.BUTTONS_CONTROL_GOBACK_ACTIVE, Path.BUTTONS_CONTROL_GOBACK_CLICKED);
-        
-        buttonPanel = new Panel();
-        buttonPanel.setBackground(GlobalValues.BACKGROUND_COLOR_DIALOG);
-        buttonPanel.add(confirmButton);
-        buttonPanel.add(cancelButton);
-        
-        contentPane.add(buttonPanel, "alignx center");        
-    }
-    
-    public void addFood() {
+    @Override
+    public void add() {
         //Pokud je vybrane jidlo, pridej ho na seznam
         if (foodSelectionPanel.getSelectedFood() != null) {
             order.getItemList().add(foodSelectionPanel.getSelectedFood().getItem());
@@ -130,31 +102,8 @@ public class AddFoodDialog extends JDialog {
         }
     }    
     
+    @Override
     public void cancel() {
         dispose();
-    }
-    
-    private class AddButtonListener extends ButtonListener {
-
-        private AddButtonListener(Button button) {
-            super(button);
-        }
-        
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            addFood();
-        }
-    }
-    
-    private class CancelButtonListener extends ButtonListener {
-        
-        private CancelButtonListener(Button button) {
-            super(button);
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            cancel();
-        }
     }
 }

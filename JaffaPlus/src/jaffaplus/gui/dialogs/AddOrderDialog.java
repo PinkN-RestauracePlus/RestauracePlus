@@ -17,31 +17,24 @@ import net.miginfocom.swing.MigLayout;
  *
  * @author Hanzik
  */
-public class AddOrderDialog extends JDialog {
+public class AddOrderDialog extends Dialog {
    
     private Table table;
     private TablePanel panel;
-    
-    private Panel contentPane = new Panel();
    
     private JTextField orderNameField;
     private Button confirmButton, cancelButton;
     
     private final int FRAME_WIDTH = 250;
     private final int FRAME_HEIGHT = 180;
-    private final int FRAME_THICKNESS = 4;
     
     public AddOrderDialog(Table table, TablePanel panel) {
         
+        super();
         this.table = table;
         this.panel = panel;
-        setContentPane(contentPane);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(panel);
-        setModal(true);
-        setResizable(false);
         setSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
-        setUndecorated(true);
         
         initComponents();
         
@@ -49,9 +42,11 @@ public class AddOrderDialog extends JDialog {
     }
 
     private void initComponents() {
-        contentPane.setLayout(new MigLayout());
-        contentPane.setBackground(GlobalValues.BACKGROUND_COLOR_DIALOG);
-        contentPane.setBorder(BorderFactory.createLineBorder(GlobalValues.BORDER_COLOR, FRAME_THICKNESS));
+        initFormPanel();
+        initButtonPanel();
+    }
+    
+    private void initFormPanel() {
         
         int textFieldWidth = 150;
         int textFieldHeight = 24;
@@ -65,26 +60,11 @@ public class AddOrderDialog extends JDialog {
         textFieldPanel.add(new JLabel("Název účtu: "));
         textFieldPanel.add(orderNameField);
         
-        contentPane.add(textFieldPanel, "alignx center, wrap");
-        
-        confirmButton = new Button();
-        cancelButton = new Button();
-        
-        confirmButton.addMouseListener(new AddButtonListener(confirmButton));
-        cancelButton.addMouseListener(new CancelButtonListener(cancelButton));
-        
-        confirmButton.loadIcons(Path.BUTTONS_CONTROL_ADD_INACTIVE, Path.BUTTONS_CONTROL_ADD_ACTIVE, Path.BUTTONS_CONTROL_ADD_CLICKED);
-        cancelButton.loadIcons(Path.BUTTONS_CONTROL_GOBACK_INACTIVE, Path.BUTTONS_CONTROL_GOBACK_ACTIVE, Path.BUTTONS_CONTROL_GOBACK_CLICKED);
-        
-        Panel buttonPanel = new Panel();
-        buttonPanel.setBackground(GlobalValues.BACKGROUND_COLOR_DIALOG);
-        buttonPanel.add(confirmButton);
-        buttonPanel.add(cancelButton);
-        
-        contentPane.add(buttonPanel, "alignx center");
+        getContentPane().add(textFieldPanel, "alignx center, wrap");        
     }
     
-    public void addOrder() {
+    @Override
+    public void add() {
         int maxLength = 20;
         String orderName = orderNameField.getText();
         
@@ -96,37 +76,11 @@ public class AddOrderDialog extends JDialog {
         
         if (panel != null) {
             panel.repaint();
-        } else {
-            System.out.println("null");
         }
     }
     
+    @Override
     public void cancel() {
         dispose();
-    }
-    
-    private class AddButtonListener extends ButtonListener {
-
-        private AddButtonListener(Button button) {
-            super(button);
-        }
-        
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            addOrder();
-            cancel();
-        }
-    }
-    
-    private class CancelButtonListener extends ButtonListener {
-        
-        private CancelButtonListener(Button button) {
-            super(button);
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            cancel();
-        }
     }
 }
