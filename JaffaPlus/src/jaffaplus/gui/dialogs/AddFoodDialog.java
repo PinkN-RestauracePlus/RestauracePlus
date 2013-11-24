@@ -92,7 +92,7 @@ public class AddFoodDialog extends Dialog {
     public void add() {
         //Pokud je vybrane jidlo, pridej ho na seznam
         if (foodSelectionPanel.getSelectedFood() != null) {
-            order.getItemList().add(foodSelectionPanel.getSelectedFood().getItem());
+            order.addItem(foodSelectionPanel.getSelectedFood().getItem());
         }
         
         if (panel != null) {
