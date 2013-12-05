@@ -65,6 +65,10 @@ public class Booking {
     public int getYear() {
         return year;
     }
+    
+    public String getDate() {
+        return day + "." + (month + 1) + "." + year;
+    }
 
     @Override
     public String toString() {
