@@ -24,6 +24,10 @@ public class OrderList implements Iterable<Order> {
         return null;
     }
     
+    public int size() {
+        return list.size();
+    }
+    
     public void remove(Order order) {
         list.remove(order);
     }

@@ -35,7 +35,7 @@ public class PanelSwitcher {
                 break;
             }
             case GlobalValues.PANEL_HOUSEMAP: {
-                mainFrame.getContentPane().add(new HouseMapPanel());
+                mainFrame.getContentPane().add(new HousePanel());
                 break;
             }
             case GlobalValues.PANEL_TABLE: {

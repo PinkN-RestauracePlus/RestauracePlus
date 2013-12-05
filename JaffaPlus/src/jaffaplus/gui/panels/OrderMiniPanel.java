@@ -32,7 +32,6 @@ public class OrderMiniPanel extends Panel {
         this.table = table;
         
         addMouseListener(new MiniPanelListener(this));
-        setLayout(new MigLayout());
         setBorder(BorderFactory.createLineBorder(GlobalValues.BORDER_COLOR));
         setMaximumSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
         

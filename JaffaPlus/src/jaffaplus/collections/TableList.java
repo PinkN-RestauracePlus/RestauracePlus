@@ -1,12 +1,14 @@
 package jaffaplus.collections;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Random;
 
 /**
  *
  * @author Hanzik
  */
-public class TableList {
+public class TableList implements Iterable<Table> {
     
     private ArrayList<Table> list = new ArrayList<>();
     
@@ -27,10 +29,16 @@ public class TableList {
         list.remove(table);
     }
     
+    @Override
+    public Iterator<Table> iterator() {
+        return list.iterator();
+    }
+    
     /* For testing purposes only */
     public void fillList() {
-        for (int i = 0; i < 10; i++) {
-            add(new Table(i, 10));
+        Random rand = new Random();
+        for (int i = 1; i < 15; i++) {
+            add(new Table(i, rand.nextInt(10) + 5));            
         }
     }
 }
