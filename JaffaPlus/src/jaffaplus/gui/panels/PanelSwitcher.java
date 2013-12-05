@@ -46,6 +46,16 @@ public class PanelSwitcher {
                 mainFrame.getContentPane().add(new CalendarPanel());
                 break;
             }
+            case GlobalValues.PANEL_FOODMENU: {
+                //here is where we show food menu editor
+//                mainFrame.getContentPane().add(new TablePanel());
+                break;
+            }
+            case GlobalValues.PANEL_SUPPLIERS: {
+                //here is where we show suppliers panel
+//                mainFrame.getContentPane().add(new CalendarPanel());
+                break;
+            }
         }       
         mainFrame.repaint();
         mainFrame.revalidate();

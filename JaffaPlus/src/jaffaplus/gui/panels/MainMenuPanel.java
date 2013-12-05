@@ -14,7 +14,7 @@ import javax.swing.JLabel;
  */
 public class MainMenuPanel extends Panel {
     
-    private MainMenuButton foodOrders, booking, help, settings ;
+    private MainMenuButton foodOrders, booking, foodMenu, suppliers, help, settings;
     
     public MainMenuPanel() {
         
@@ -26,8 +26,7 @@ public class MainMenuPanel extends Panel {
         
         initMainText();
         initButtons();
-        initFooter();
-                
+        initFooter();                
     }
 
     private void initMainText() {
@@ -42,16 +41,22 @@ public class MainMenuPanel extends Panel {
         
         foodOrders = new MainMenuButton("Objednávky", GlobalValues.PANEL_TABLE);
         booking = new MainMenuButton("Jídelní lístek", GlobalValues.PANEL_BOOKING);
+        foodMenu = new MainMenuButton("Jídelní lístek", GlobalValues.PANEL_FOODMENU);
+        suppliers = new MainMenuButton("Dodavatelé", GlobalValues.PANEL_SUPPLIERS);
         help = new MainMenuButton("Nápověda", GlobalValues.PANEL_TABLE);
         settings = new MainMenuButton("Nastavení", GlobalValues.PANEL_TABLE);
         
         foodOrders.loadIcons(Path.BUTTONS_MAINMENU_ORDERS_INACTIVE, Path.BUTTONS_MAINMENU_ORDERS_ACTIVE, Path.BUTTONS_MAINMENU_ORDERS_CLICKED);
         booking.loadIcons(Path.BUTTONS_MAINMENU_BOOKING_INACTIVE, Path.BUTTONS_MAINMENU_BOOKING_ACTIVE, Path.BUTTONS_MAINMENU_BOOKING_CLICKED);
+        foodMenu.loadIcons(Path.BUTTONS_MAINMENU_FOODMENU_INACTIVE, Path.BUTTONS_MAINMENU_FOODMENU_ACTIVE, Path.BUTTONS_MAINMENU_FOODMENU_CLICKED);
+        suppliers.loadIcons(Path.BUTTONS_MAINMENU_SUPPLY_INACTIVE, Path.BUTTONS_MAINMENU_SUPPLY_ACTIVE, Path.BUTTONS_MAINMENU_SUPPLY_CLICKED);
         help.loadIcons(Path.BUTTONS_MAINMENU_HELP_INACTIVE, Path.BUTTONS_MAINMENU_HELP_ACTIVE, Path.BUTTONS_MAINMENU_HELP_CLICKED);
         settings.loadIcons(Path.BUTTONS_MAINMENU_SETTINGS_INACTIVE, Path.BUTTONS_MAINMENU_SETTINGS_ACTIVE, Path.BUTTONS_MAINMENU_SETTINGS_CLICKED);
         
         buttonPanel.add(foodOrders);
         buttonPanel.add(booking, "wrap");
+        buttonPanel.add(foodMenu);
+        buttonPanel.add(suppliers, "wrap");
         buttonPanel.add(help);
         buttonPanel.add(settings, "wrap");
         add(buttonPanel, "al center, wrap");
