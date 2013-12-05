@@ -72,15 +72,23 @@ public class BookingMiniPanel extends Panel {
         add(label2, "width 100");
     }
     
-    public void changeState() {
-        if (selected) {
-            selected = false;
-            setBackground(GlobalValues.BACKGROUND_COLOR);
-        } else {
-            selected = true;
-            setBackground(GlobalValues.BACKGROUND_COLOR_SELECTED);
-            bookingParentPanel.setSelectedBooking(this);
-        }        
+    @Override
+    public void deselectPanel() {
+        selected = false;
+        bookingParentPanel.setSelectedBooking(null);
+        setBackground(GlobalValues.BACKGROUND_COLOR);   
+    }
+    
+    @Override
+    public void selectPanel() {
+        //Zrusi vyber posledniho zvoleneho panelu
+        if (bookingParentPanel.getSelectedPanel() != null) {
+            bookingParentPanel.getSelectedPanel().deselectPanel();
+        }
+        //Vybere tento panel
+        selected = true;
+        bookingParentPanel.setSelectedBooking(this);
+        setBackground(GlobalValues.BACKGROUND_COLOR_SELECTED);
     }
 
     public Booking getBooking() {
@@ -94,8 +102,12 @@ public class BookingMiniPanel extends Panel {
         }
         
         @Override
-        public void mouseReleased(MouseEvent e) {
-            changeState();
+        public void mouseReleased(MouseEvent e) {      
+            if (selected) {
+                deselectPanel();
+            } else {
+                selectPanel();
+            }
         }
     }
 }

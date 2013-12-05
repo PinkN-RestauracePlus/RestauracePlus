@@ -70,19 +70,33 @@ public class BookingPanel extends Panel {
     }
     
     public void resetSelection() {
-        displayMessage("Zvolte den, pro který chcete robrazit rezervace.");
+        displayMessage("Zvolte den, pro který chcete zobrazit rezervace.");
         selectedBooking = null;
         selectedPanel = null;
     }
+
+    public Booking getSelectedBooking() {
+        return selectedBooking;
+    }
     
     public void setSelectedBooking(BookingMiniPanel panel) {
-        if (selectedPanel != null) {
-            selectedPanel.changeState();
+        if (panel != null) {
+            this.selectedBooking = panel.getBooking();
+            this.selectedPanel = panel;            
         }
-        this.selectedPanel = panel;
-        this.selectedBooking = panel.getBooking();
     }
 
+    public BookingMiniPanel getSelectedPanel() {
+        return selectedPanel;
+    }
+
+    public boolean isBookingSelected() {
+        if (selectedPanel != null) {
+            return true;
+        }
+        return false;
+    }
+    
     private void setDefaultValues() {
         displayMessage("Zvolte den, pro který chcete robrazit rezervace.");
         setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));

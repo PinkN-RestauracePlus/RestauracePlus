@@ -20,7 +20,8 @@ import javax.swing.JTextField;
 public class AddBookingDialog extends Dialog {
    
     private BookingPanel panel;
-    
+    private Booking oldBooking;
+    private boolean editing;
     private JLabel errorLabel = new JLabel("");
     private JTextField nameField, dateField, hourField, tableField, numberField;
     
@@ -29,17 +30,23 @@ public class AddBookingDialog extends Dialog {
     private final int FRAME_WIDTH = 400;
     private final int FRAME_HEIGHT = 280;
     
-    public AddBookingDialog(BookingPanel panel) {
+    public AddBookingDialog(BookingPanel panel, boolean editing) {
         
         super();
         this.panel = panel;
+        this.editing = editing;
         setLocationRelativeTo(panel);
         setSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         
         initComponents();
         
+        if (editing) {
+            this.oldBooking = panel.getSelectedBooking();
+            fillTextFields(panel.getSelectedBooking());            
+        }
+        
         setVisible(true);
-    }
+    }    
 
     private void initComponents() {
         add(errorLabel, "push, align center, wrap");
@@ -63,8 +70,7 @@ public class AddBookingDialog extends Dialog {
         dateField.setPreferredSize(new Dimension(80, 24)); 
         formPanel.add(new JLabel("Datum: "));
         formPanel.add(dateField);
-        
-        
+                
         numberField = new JTextField();  
         numberField.addKeyListener(new TextFieldListener(numberField));   
         numberField.setPreferredSize(new Dimension(50, 24));        
@@ -106,6 +112,9 @@ public class AddBookingDialog extends Dialog {
         try {            
             Booking newBooking = getValidBooking(name, table, number, date, hour);
             DataStorage.getInstance().getBooking().add(newBooking);
+            if (editing && oldBooking != null) {
+                DataStorage.getInstance().getBooking().remove(oldBooking);
+            }
             cancel();
         } catch (DialogInputException ex) {
             ex.getExceptionSource().setBackground(GlobalValues.ERROR_COLOR);
@@ -204,6 +213,14 @@ public class AddBookingDialog extends Dialog {
         } catch (NumberFormatException e) {
             throw new DialogInputException("Chybně zadaná hodina.", hourField);
         }
+    }
+    
+    private void fillTextFields(Booking booking) {
+        nameField.setText(booking.getName());
+        dateField.setText(booking.getDate());
+        hourField.setText(Integer.toString(booking.getHour()));
+        tableField.setText(Integer.toString(booking.getTable()));
+        numberField.setText(Integer.toString(booking.getPersonCount()));
     }
     
     private class TextFieldListener implements KeyListener {

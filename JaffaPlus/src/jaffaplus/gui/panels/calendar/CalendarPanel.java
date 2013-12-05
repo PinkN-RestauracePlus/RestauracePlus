@@ -1,6 +1,7 @@
 package jaffaplus.gui.panels.calendar;
 
 import jaffaplus.calendar.Month;
+import jaffaplus.collections.Booking;
 import jaffaplus.collections.BookingList;
 import jaffaplus.collections.DataStorage;
 import jaffaplus.gui.buttons.Button;
@@ -96,17 +97,21 @@ public class CalendarPanel extends Panel {
         
         Button addBooking = new Button("+");
         Button removeBooking = new Button("-");
+        Button editBooking = new Button("Editovat");
         Button goBackButton = new Button("Zpět", GlobalValues.PANEL_MAINMENU);
         
         addBooking.loadIcons(Path.BUTTONS_CONTROL_ADD_INACTIVE, Path.BUTTONS_CONTROL_ADD_ACTIVE, Path.BUTTONS_CONTROL_ADD_CLICKED);
         removeBooking.loadIcons(Path.BUTTONS_CONTROL_REMOVE_INACTIVE, Path.BUTTONS_CONTROL_REMOVE_ACTIVE, Path.BUTTONS_CONTROL_REMOVE_CLICKED);
+        editBooking.loadIcons(Path.BUTTONS_CONTROL_DETAIL_INACTIVE, Path.BUTTONS_CONTROL_DETAIL_ACTIVE, Path.BUTTONS_CONTROL_DETAIL_CLICKED);
         goBackButton.loadIcons(Path.BUTTONS_CONTROL_GOBACK_INACTIVE, Path.BUTTONS_CONTROL_GOBACK_ACTIVE, Path.BUTTONS_CONTROL_GOBACK_CLICKED);
 
-        addBooking.addMouseListener(new AddBookingButtonListener(addBooking));
+        addBooking.addMouseListener(new AddBookingButtonListener(addBooking));        
         removeBooking.addMouseListener(new RemoveBookingButtonListener(removeBooking));
+        editBooking.addMouseListener(new EditBookingButtonListener(editBooking));
         
         buttonPanel2.add(addBooking);
         buttonPanel2.add(removeBooking);
+        buttonPanel2.add(editBooking);
         buttonPanel2.add(goBackButton);
     }
     
@@ -128,10 +133,15 @@ public class CalendarPanel extends Panel {
         bookingPanel.showNewList(day, monthPanel.getMonth().getMonthNumber(), monthPanel.getYear());
     }
     
-    private void createDialogWindow() {
-        AddBookingDialog dialog = new AddBookingDialog(bookingPanel);
+    private void createDialogWindow(boolean editing) {
+        //If editing existing booking
+        if (editing) {
+            AddBookingDialog dialog = new AddBookingDialog(bookingPanel, editing);           
+        } else {
+            AddBookingDialog dialog = new AddBookingDialog(bookingPanel, editing);            
+        }
     }
-    
+        
     private void removeSelectedBooking() {
         bookingPanel.removeSelectedBooking();
     }
@@ -145,7 +155,6 @@ public class CalendarPanel extends Panel {
         @Override
         public void mouseReleased(MouseEvent e) {
             changeMonth(getPreviousMonth());
-            removeSelectedBooking();
         }
     }
     
@@ -158,7 +167,6 @@ public class CalendarPanel extends Panel {
         @Override
         public void mouseReleased(MouseEvent e) {
             changeMonth(getNextMonth());
-            removeSelectedBooking();
         }
     }
     
@@ -170,8 +178,27 @@ public class CalendarPanel extends Panel {
         
         @Override
         public void mouseReleased(MouseEvent e) {
-            createDialogWindow();
+            createDialogWindow(false);
+            bookingPanel.resetSelection();
             bookingPanel.refreshBookingForDay();
+        }
+    }
+    
+    private class EditBookingButtonListener extends ButtonListener {
+            
+        private EditBookingButtonListener(Button button) {
+            super(button);
+        }
+        
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            if (bookingPanel.isBookingSelected()) {
+                createDialogWindow(true);     
+                bookingPanel.resetSelection();
+                bookingPanel.refreshBookingForDay();
+            } else {
+                //vypis chybu, ze je nejprve treba vybrat rezervaci
+            }
         }
     }
     
