@@ -78,7 +78,7 @@ public class TablePanel extends Panel {
         
         infoPanel.add(new JLabel("Kapacita: " + table.getCapacity()), "wrap");
     }
-
+    
     private void initButtonPanel() {
         
         int panelWidth = 450;
@@ -91,7 +91,7 @@ public class TablePanel extends Panel {
         Button addOrderButton = new Button("+");
         Button removeOrderButton = new Button("-");
         Button openOrderButton = new Button("Detaily");
-        Button goBackButton = new Button("Zpět", GlobalValues.PANEL_MAINMENU);
+        Button goBackButton = new Button("Zpět", GlobalValues.PANEL_HOUSEMAP);
         
         addOrderButton.loadIcons(Path.BUTTONS_CONTROL_ADD_INACTIVE, Path.BUTTONS_CONTROL_ADD_ACTIVE, Path.BUTTONS_CONTROL_ADD_CLICKED);
         removeOrderButton.loadIcons(Path.BUTTONS_CONTROL_REMOVE_INACTIVE, Path.BUTTONS_CONTROL_REMOVE_ACTIVE, Path.BUTTONS_CONTROL_REMOVE_CLICKED);
