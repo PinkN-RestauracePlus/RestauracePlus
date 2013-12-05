@@ -27,5 +27,7 @@ public class GlobalValues {
     public static final int PANEL_HOUSEMAP = 1002;
     public static final int PANEL_TABLE = 1003;
     public static final int PANEL_ORDER = 1004;   
-    public static final int PANEL_BOOKING = 1005;    
+    public static final int PANEL_BOOKING = 1005; 
+    public static final int PANEL_FOODMENU = 1006;   
+    public static final int PANEL_SUPPLIERS = 1007;     
 }

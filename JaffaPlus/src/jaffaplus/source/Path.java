@@ -28,6 +28,10 @@ public class Path {
     public static final String BUTTONS_MAINMENU_ORDERS_ACTIVE = BUTTONS_FOLDER_MAINMENU + "waiterButton_active.png";
     public static final String BUTTONS_MAINMENU_ORDERS_CLICKED = BUTTONS_FOLDER_MAINMENU + "waiterButton_clicked.png";
     
+    public static final String BUTTONS_MAINMENU_SUPPLY_INACTIVE = BUTTONS_FOLDER_MAINMENU + "supplierButton_inactive.png";
+    public static final String BUTTONS_MAINMENU_SUPPLY_ACTIVE = BUTTONS_FOLDER_MAINMENU + "supplierButton_active.png";
+    public static final String BUTTONS_MAINMENU_SUPPLY_CLICKED = BUTTONS_FOLDER_MAINMENU + "supplierButton_clicked.png";  
+    
     public static final String BUTTONS_MAINMENU_SETTINGS_INACTIVE = BUTTONS_FOLDER_MAINMENU + "settingsButton_inactive.png";
     public static final String BUTTONS_MAINMENU_SETTINGS_ACTIVE = BUTTONS_FOLDER_MAINMENU + "settingsButton_active.png";
     public static final String BUTTONS_MAINMENU_SETTINGS_CLICKED = BUTTONS_FOLDER_MAINMENU + "settingsButton_clicked.png";  
