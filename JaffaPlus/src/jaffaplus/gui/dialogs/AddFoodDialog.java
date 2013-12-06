@@ -3,7 +3,7 @@ package jaffaplus.gui.dialogs;
 import jaffaplus.collections.DataStorage;
 import jaffaplus.collections.Item;
 import jaffaplus.gui.panels.Panel;
-import jaffaplus.gui.panels.menueditor.MenuEditorPanel;
+import jaffaplus.gui.panels.MenuEditorPanel;
 import jaffaplus.source.GlobalValues;
 import jaffaplus.tools.FoodFormatValidator;
 import java.awt.Dimension;

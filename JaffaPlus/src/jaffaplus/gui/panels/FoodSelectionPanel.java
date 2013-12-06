@@ -17,7 +17,7 @@ public class FoodSelectionPanel extends Panel {
     private ItemPanel foodSelected;    
     
     private final int FRAME_WIDTH = 400;
-    private final int FRAME_HEIGHT = 350;
+    private final int FRAME_HEIGHT = 400;
     
     public FoodSelectionPanel(ItemList list) {
         this.list = list;
@@ -32,10 +32,10 @@ public class FoodSelectionPanel extends Panel {
         
         add(new JLabel("Seznam jídel"), "wrap");
         
-        showFoodFromList();
+        displayItemsFromList(list);
     }
 
-    private void showFoodFromList() {
+    public void displayItemsFromList(ItemList list) {
         removeAll();
         
         int itemsAdded = 0;
@@ -45,6 +45,10 @@ public class FoodSelectionPanel extends Panel {
             itemsAdded++;
         }
         calculatePanelHeight(itemsAdded);
+        
+        if (itemsAdded == 0) {
+            add(new JLabel("Nic nenalezeno."));
+        }
         
         repaint();
         revalidate();

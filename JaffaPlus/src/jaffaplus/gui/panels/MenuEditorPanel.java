@@ -1,4 +1,4 @@
-package jaffaplus.gui.panels.menueditor;
+package jaffaplus.gui.panels;
 
 import jaffaplus.collections.DataStorage;
 import jaffaplus.collections.Item;
@@ -6,7 +6,6 @@ import jaffaplus.collections.ItemList;
 import jaffaplus.gui.buttons.Button;
 import jaffaplus.gui.buttons.ButtonListener;
 import jaffaplus.gui.dialogs.AddFoodDialog;
-import jaffaplus.gui.panels.Panel;
 import jaffaplus.source.GlobalValues;
 import jaffaplus.source.Path;
 import java.awt.Dimension;
@@ -29,7 +28,7 @@ public class MenuEditorPanel extends Panel {
     private Panel labelPanel, itemsPanel, bottomPanel;        
     private MenuItemMiniPanel selectedItemPanel;
     
-    private JTextField searchField = new JTextField();
+    private JTextField searchField;
     
     public MenuEditorPanel() {
         super();       
