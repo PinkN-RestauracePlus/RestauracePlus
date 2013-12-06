@@ -4,6 +4,10 @@ package jaffaplus.tools;
  *
  * @author Hanzik
  */
-public class SearchTool {
+public class SearchTool implements Runnable {
 
+    @Override
+    public void run() {
+        
+    }
 }

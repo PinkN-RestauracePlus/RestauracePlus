@@ -68,11 +68,11 @@ public class ItemList implements Iterable<Item> {
         add(new Item("Pekingské kuře", "M15", 95));
         add(new Item("Mohagonský klokan", "G01", 150));
         add(new Item("Steak gigantaura", "G03", 145));
-//        add(new Item("Hloupá žirafa", "G05", 299));
-//        add(new Item("Polévka Gaspačo", "HOT1", 49));
-//        add(new Item("Bobika", "B02", 75));
-//        add(new Item("Hafburger", "B03", 35));
-//        add(new Item("Pravý chotěbořský koňopes", "B04", 50));
+        add(new Item("Hloupá žirafa", "G05", 299));
+        add(new Item("Polévka Gaspačo", "HOT1", 49));
+        add(new Item("Bobika", "B02", 75));
+        add(new Item("Hafburger", "B03", 35));
+        add(new Item("Pravý chotěbořský koňopes", "B04", 50));
     }
 
     @Override

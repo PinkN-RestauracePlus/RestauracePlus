@@ -1,8 +1,11 @@
 package jaffaplus.gui.dialogs;
 
+import jaffaplus.collections.DataStorage;
 import jaffaplus.collections.Item;
 import jaffaplus.gui.panels.Panel;
+import jaffaplus.gui.panels.menueditor.MenuEditorPanel;
 import jaffaplus.source.GlobalValues;
+import jaffaplus.tools.FoodFormatValidator;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -16,13 +19,35 @@ import javax.swing.JTextField;
 public class AddFoodDialog extends Dialog {
     
     private Panel formPanel;
+    private Item oldItem;
+    private boolean editing;
+    private JLabel errorLabel = new JLabel("");
     private JTextField nameField, priceField, idField;
     
-    public AddFoodDialog() {
+    private FoodFormatValidator formatValidator;
+    
+    private final int FRAME_WIDTH = 400;
+    private final int FRAME_HEIGHT = 200;
+    
+    public AddFoodDialog(MenuEditorPanel parentPanel, boolean editing) {
+        this.formatValidator = new FoodFormatValidator();
+        this.editing = editing;
+        
+        setSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
+        
         initComponents();
+        
+        if (editing) {
+            this.oldItem = parentPanel.getSelectedItem();
+            fillTextFields(oldItem);            
+        }
+        
+        setVisible(true);
     }
 
     private void initComponents() {
+        add(errorLabel, "push, align center, wrap");
+        showMessage("Vložte položku: ", false);
         initFormPanel();
         initButtonPanel();
     }
@@ -47,8 +72,7 @@ public class AddFoodDialog extends Dialog {
         idField.addKeyListener(new TextFieldListener(idField));   
         idField.setPreferredSize(new Dimension(50, 24));        
         formPanel.add(new JLabel("Počet osob: "));
-        formPanel.add(idField, "wrap, push");
-                
+        formPanel.add(idField, "wrap, push");                
         
         add(formPanel, "push, align center, wrap");   
     }
@@ -57,6 +81,35 @@ public class AddFoodDialog extends Dialog {
         nameField.setText(item.getName());
         priceField.setText(Integer.toString(item.getPrice()));
         idField.setText(item.getId());
+    }
+    
+    private void showMessage(String message, boolean isError) {
+        if (isError) {
+            errorLabel.setForeground(GlobalValues.ERROR_COLOR);            
+        } else {
+            errorLabel.setForeground(GlobalValues.FONT_COLOR);
+        }
+        errorLabel.setText(message);
+    }
+    
+    @Override
+    public void add() {        
+        try {            
+            Item newItem = formatValidator.getValidItem(nameField, priceField, idField);
+            DataStorage.getInstance().getFoodMenu().add(newItem);
+            if (editing && oldItem != null) {
+                DataStorage.getInstance().getFoodMenu().remove(oldItem);
+            }
+            cancel();
+        } catch (DialogInputException ex) {
+            ex.getExceptionSource().setBackground(GlobalValues.ERROR_COLOR);
+            showMessage(ex.getMessage(), true);
+        }
+    }    
+    
+    @Override
+    public void cancel() {
+        dispose();
     }
     
     private class TextFieldListener implements KeyListener {
