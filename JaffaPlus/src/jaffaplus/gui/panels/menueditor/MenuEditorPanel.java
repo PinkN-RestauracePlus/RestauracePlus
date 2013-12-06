@@ -9,12 +9,13 @@ import jaffaplus.gui.dialogs.AddFoodDialog;
 import jaffaplus.gui.panels.Panel;
 import jaffaplus.source.GlobalValues;
 import jaffaplus.source.Path;
-import jaffaplus.tools.SearchTool;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -27,6 +28,8 @@ public class MenuEditorPanel extends Panel {
     private ItemList completeList = DataStorage.getInstance().getFoodMenu();    
     private Panel labelPanel, itemsPanel, bottomPanel;        
     private MenuItemMiniPanel selectedItemPanel;
+    
+    private JTextField searchField = new JTextField();
     
     public MenuEditorPanel() {
         super();       
@@ -63,10 +66,10 @@ public class MenuEditorPanel extends Panel {
         int height = 40;
         
         bottomPanel = new Panel();
-        JTextField searchField = new JTextField();
+        searchField = new JTextField();
         searchField.setPreferredSize(new Dimension(width, height));
         searchField.setFont(new Font("Calibri", Font.PLAIN, 20));
-        searchField.addKeyListener(new SearchFieldListener(completeList));
+        searchField.addKeyListener(new SearchFieldListener());
         
         bottomPanel.add(searchField);
     }        
@@ -107,6 +110,7 @@ public class MenuEditorPanel extends Panel {
 
     private void resetSelection() {
         selectedItemPanel = null;
+        searchField.setText("");
     }
     
     private void refresh() {
@@ -169,6 +173,7 @@ public class MenuEditorPanel extends Panel {
         }
     }
     
+    /* Pri kliknuti odstrani zvolenou polozku ze seznamu. */
     private class RemoveBookingButtonListener extends ButtonListener {
         
         private RemoveBookingButtonListener(Button button) {
@@ -182,30 +187,34 @@ public class MenuEditorPanel extends Panel {
         }
     }
     
-    private class SearchFieldListener implements KeyListener {
+    /* Zapne vyhledavani az pote, co od posledniho stisku klavesy ubehne
+     * doba DELAY. */
+    private class SearchFieldListener extends KeyAdapter {
         
-        private double lastInput = 0;
-        private double DELAY = 400;
+        private long DELAY = 400;
         
-        private SearchTool tool = new SearchTool();
-        
+        private final Timer timer = new Timer(true);
+        private TimerTask searchTask;
+                
         @Override
-        public void keyTyped(KeyEvent e) {
-            //do nothing
-        }
-
-        @Override
-        public void keyPressed(KeyEvent e) {
-            //do nothing
-        }
-
-        @Override
-        public void keyReleased(KeyEvent e) {
-            
-            
-            
-            tool 
-        }
-        
+        public void keyReleased(KeyEvent e) { 
+            if(searchTask != null) {
+                searchTask.cancel();
+            }
+            searchTask = new TimerTask() {
+                @Override
+                public void run() {
+                    String key = searchField.getText();
+                    if (key.length() == 0) {
+                        displayItemsFromList(completeList);                        
+                    } else if (key.length() == 1) {
+                        displayItemsFromList(completeList.getByFirstLetter(key.toLowerCase().charAt(0)));                        
+                    } else {
+                        displayItemsFromList(completeList.getBySubstring(key.toLowerCase()));
+                    }
+                }
+            };
+            timer.schedule(searchTask, DELAY);
+        }        
     }
 }
