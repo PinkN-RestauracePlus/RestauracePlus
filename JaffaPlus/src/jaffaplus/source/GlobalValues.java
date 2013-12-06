@@ -29,5 +29,9 @@ public class GlobalValues {
     public static final int PANEL_ORDER = 1004;   
     public static final int PANEL_BOOKING = 1005; 
     public static final int PANEL_FOODMENU = 1006;   
-    public static final int PANEL_SUPPLIERS = 1007;     
+    public static final int PANEL_SUPPLIERS = 1007;   
+    
+    /* Identifikatory validatoru formatu */
+    public static final int VALIDATOR_BOOKING = 2001;
+    public static final int VALIDATOR_FOOD = 2002;  
 }

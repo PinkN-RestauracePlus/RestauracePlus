@@ -2,7 +2,7 @@ package jaffaplus.gui.panels;
 
 import jaffaplus.collections.Item;
 import jaffaplus.collections.Order;
-import jaffaplus.gui.dialogs.AddFoodDialog;
+import jaffaplus.gui.dialogs.AddFoodFromMenuDialog;
 import jaffaplus.gui.buttons.Button;
 import jaffaplus.gui.buttons.ButtonListener;
 import jaffaplus.source.GlobalValues;
@@ -147,7 +147,7 @@ public class OrderPanel extends Panel {
         
         @Override
         public void mouseReleased(MouseEvent e) {
-            AddFoodDialog dialog = new AddFoodDialog(order, thisPanel);
+            AddFoodFromMenuDialog dialog = new AddFoodFromMenuDialog(order, thisPanel);
             if (selectedFood != null) {
                 selectedFood.deselectPanel();
             }

@@ -6,6 +6,7 @@ import jaffaplus.collections.DataStorage;
 import jaffaplus.gui.panels.Panel;
 import jaffaplus.gui.panels.calendar.BookingPanel;
 import jaffaplus.source.GlobalValues;
+import jaffaplus.tools.BookingFormatValidator;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -27,6 +28,8 @@ public class AddBookingDialog extends Dialog {
     
     private Panel formPanel;
     
+    private BookingFormatValidator formatValidator;
+    
     private final int FRAME_WIDTH = 400;
     private final int FRAME_HEIGHT = 280;
     
@@ -35,6 +38,8 @@ public class AddBookingDialog extends Dialog {
         super();
         this.panel = panel;
         this.editing = editing;
+        this.formatValidator = new BookingFormatValidator();
+        
         setLocationRelativeTo(panel);
         setSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         
@@ -102,15 +107,9 @@ public class AddBookingDialog extends Dialog {
     }
     
     @Override
-    public void add() {
-        String name = nameField.getText();
-        String date = dateField.getText();
-        String hour = hourField.getText();
-        String number = numberField.getText();
-        String table = tableField.getText();
-        
+    public void add() {        
         try {            
-            Booking newBooking = getValidBooking(name, table, number, date, hour);
+            Booking newBooking = formatValidator.getValidBooking(nameField, tableField, numberField, dateField, hourField);
             DataStorage.getInstance().getBooking().add(newBooking);
             if (editing && oldBooking != null) {
                 DataStorage.getInstance().getBooking().remove(oldBooking);
@@ -125,94 +124,6 @@ public class AddBookingDialog extends Dialog {
     @Override
     public void cancel() {
         dispose();
-    }
-    
-    private Booking getValidBooking(String name, String table, String number, String date, String hour) throws DialogInputException {
-        int peopleNumber = getValidNumber(number);
-        int tableNumber = getValidTable(table);
-        int[] validDate = getValidDate(date);
-        int validHour = getValidHour(hour);
-        
-        return new Booking(name, tableNumber, peopleNumber, validHour, validDate[0], validDate[1] - 1, validDate[2]);
-    }
-
-    private int getValidNumber(String number) throws DialogInputException {   
-        
-        try {
-            int validNumber = Integer.parseInt(number);
-            if (validNumber < 1) {
-                throw new DialogInputException("Zadaný počet osob nesmí být záporný.", numberField);
-            } else if (validNumber > 20) {
-                throw new DialogInputException("Tak velký stůl nemáme.", numberField);
-            }
-            return validNumber;
-        } catch (NumberFormatException e) {
-            throw new DialogInputException("Chybně zadaný počet osob.", numberField);
-        }
-    }
-
-    private int getValidTable(String table) throws DialogInputException {  
-        
-        try {
-            int validNumber = Integer.parseInt(table);
-            if (validNumber < 1) {
-                throw new DialogInputException("Zadané číslo stolu nesmí být záporné.", tableField);
-            }
-            return validNumber;
-        } catch (NumberFormatException e) {
-            throw new DialogInputException("Chybně zadané číslo stolu.", tableField);
-        }
-    }
-
-    private int[] getValidDate(String date) throws DialogInputException {
-        String[] dateArray = date.split("\\.");
-        
-        try {
-            int day = Integer.parseInt(dateArray[0]);
-            int month = Integer.parseInt(dateArray[1]);
-            int year = Integer.parseInt(dateArray[2]);
-            
-            if (day > MonthsOfYear.getLength(month - 1)) {
-                throw new DialogInputException("Měsíc má pouze " + MonthsOfYear.getLength(month) + " dnů.", dateField);
-            } else if (day < 1) {
-                throw new DialogInputException("Měsíc nemá záporné množství dnů.", dateField);
-            }
-            
-            if (month > 12) {
-                throw new DialogInputException("Rok má pouze 12 měsíců.", dateField);
-            } else if (month < 1) {
-                throw new DialogInputException("Rok nemá záporný počet měsíců.", dateField);
-            }
-            
-            if (year < 2013) {
-                throw new DialogInputException("Chcete snad cestovat časem do minulosti?", dateField);
-            } else if (year > 2100) {
-                throw new DialogInputException("Budoucnost firmy vidíme růžově, ale čeho je moc...", dateField);
-            }
-            
-            int[] validDate = new int[3];
-            validDate[0] = day;
-            validDate[1] = month;
-            validDate[2] = year;
-            return validDate;
-        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-            throw new DialogInputException("Zadávejte datum ve tvaru XX.XX.XXXX", dateField);
-        }
-    }
-
-    private int getValidHour(String hour) throws DialogInputException {  
-        
-        try {
-            int validNumber = Integer.parseInt(hour);
-            if (validNumber > 23) {
-                throw new DialogInputException("Den má pouze 24 hodin.", hourField);
-            } else if (validNumber < 0) {
-                throw new DialogInputException("Den nemá záporné množství hodin.", hourField);
-            }
-            return validNumber;
-        } catch (NumberFormatException e) {
-            throw new DialogInputException("Chybně zadaná hodina.", hourField);
-        }
     }
     
     private void fillTextFields(Booking booking) {
