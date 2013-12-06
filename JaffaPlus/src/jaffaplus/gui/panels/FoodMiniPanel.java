@@ -21,7 +21,7 @@ public class FoodMiniPanel extends Panel {
     private Item item;
     private OrderPanel parentPanel;
         
-    private final int PANEL_WIDTH = 350;
+    private final int PANEL_WIDTH = 370;
     private final int PANEL_HEIGHT = 40;
     private final int MARGIN = 2;
     

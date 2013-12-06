@@ -1,13 +1,20 @@
 package jaffaplus.gui.dialogs;
 
 import jaffaplus.collections.DataStorage;
+import jaffaplus.collections.ItemList;
 import jaffaplus.collections.Order;
 import jaffaplus.gui.panels.FoodSelectionPanel;
 import jaffaplus.gui.panels.OrderPanel;
 import jaffaplus.gui.panels.Panel;
 import jaffaplus.source.GlobalValues;
 import java.awt.Dimension;
-import javax.swing.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.TimerTask;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -21,10 +28,11 @@ public class AddFoodFromMenuDialog extends Dialog {
     private Panel searchPanel;
     private FoodSelectionPanel foodSelectionPanel;
     
+    private JTextField searchField;
     private JScrollPane scrollPane;
         
-    private final int FRAME_WIDTH = 400;
-    private final int FRAME_HEIGHT = 500;
+    private final int FRAME_WIDTH = 420;
+    private final int FRAME_HEIGHT = 550;
     
     public AddFoodFromMenuDialog(Order order, OrderPanel panel) {
         
@@ -56,9 +64,9 @@ public class AddFoodFromMenuDialog extends Dialog {
         searchPanel.setPreferredSize(new Dimension(SEARCH_WIDTH, SEARCH_HEIGHT));
         
         JLabel searchLabel = new JLabel("Hledat: ");
-        JTextField searchField = new JTextField();
-        
-        searchField.setPreferredSize(new Dimension(SEARCH_FIELD_WIDTH, SEARCH_HEIGHT));        
+        searchField = new JTextField();        
+        searchField.setPreferredSize(new Dimension(SEARCH_FIELD_WIDTH, SEARCH_HEIGHT));   
+        searchField.addKeyListener(new SearchFieldListener());     
         
         searchPanel.add(searchLabel);
         searchPanel.add(searchField);
@@ -68,7 +76,7 @@ public class AddFoodFromMenuDialog extends Dialog {
     private void initFoodSelectionPanel() {        
         
         int SELECTION_WIDTH = 400;
-        int SELECTION_HEIGHT = 350;
+        int SELECTION_HEIGHT = 400;
         
         foodSelectionPanel = new FoodSelectionPanel(DataStorage.getInstance().getFoodMenu());
                 
@@ -98,5 +106,37 @@ public class AddFoodFromMenuDialog extends Dialog {
     @Override
     public void cancel() {
         dispose();
+    }
+    
+    /* Zapne vyhledavani az pote, co od posledniho stisku klavesy ubehne
+     * doba DELAY. */
+    private class SearchFieldListener extends KeyAdapter {
+        
+        private long DELAY = 400;
+        
+        private final java.util.Timer timer = new java.util.Timer(true);
+        private TimerTask searchTask;
+        private ItemList completeList = DataStorage.getInstance().getFoodMenu();
+        
+        @Override
+        public void keyReleased(KeyEvent e) { 
+            if(searchTask != null) {
+                searchTask.cancel();
+            }
+            searchTask = new TimerTask() {
+                @Override
+                public void run() {
+                    String key = searchField.getText();
+                    if (key.length() == 0) {
+                        foodSelectionPanel.displayItemsFromList(completeList);                        
+                    } else if (key.length() == 1) {
+                        foodSelectionPanel.displayItemsFromList(completeList.getByFirstLetter(key.toLowerCase().charAt(0)));                        
+                    } else {
+                        foodSelectionPanel.displayItemsFromList(completeList.getBySubstring(key.toLowerCase()));
+                    }
+                }
+            };
+            timer.schedule(searchTask, DELAY);
+        }        
     }
 }

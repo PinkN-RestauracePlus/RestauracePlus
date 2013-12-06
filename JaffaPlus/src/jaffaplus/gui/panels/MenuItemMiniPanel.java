@@ -1,4 +1,4 @@
-package jaffaplus.gui.panels.menueditor;
+package jaffaplus.gui.panels;
 
 import jaffaplus.collections.Item;
 import jaffaplus.gui.panels.Panel;

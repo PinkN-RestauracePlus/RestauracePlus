@@ -2,7 +2,6 @@ package jaffaplus.gui.panels;
 
 import jaffaplus.JaffaPlus;
 import jaffaplus.gui.panels.calendar.CalendarPanel;
-import jaffaplus.gui.panels.menueditor.MenuEditorPanel;
 import jaffaplus.source.GlobalValues;
 
 /**

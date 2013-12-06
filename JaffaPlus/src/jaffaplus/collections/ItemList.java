@@ -85,6 +85,7 @@ public class ItemList implements Iterable<Item> {
         add(new Item("Bobika", "B02", 75));
         add(new Item("Hafburger", "B03", 35));
         add(new Item("Pravý chotěbořský koňopes", "B04", 50));
+        sortByName();
     }
 
     @Override
