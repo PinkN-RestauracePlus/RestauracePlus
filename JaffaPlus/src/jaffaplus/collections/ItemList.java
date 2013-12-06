@@ -37,10 +37,22 @@ public class ItemList implements Iterable<Item> {
         return null;
     }
     
+    public ItemList getByFirstLetter(char firstLetter) {
+        ItemList newlist = new ItemList();
+        String key = String.valueOf(firstLetter);
+        
+        for (Item item : list) {
+            if (item.getName().toLowerCase().startsWith(key)) {
+                newlist.add(item);
+            }
+        }
+        return newlist;
+    }
+    
     public ItemList getBySubstring(String name) {
         ItemList newlist = new ItemList();
         for (Item item : list) {
-            if (item.getName().contains(name)) {
+            if (item.getName().toLowerCase().contains(name)) {
                 newlist.add(item);
             }
         }
@@ -90,8 +102,8 @@ public class ItemList implements Iterable<Item> {
         
         @Override
         public int compare(Item i1, Item i2) {
-            String name1 = i1.getName();
-            String name2 = i2.getName();
+            String name1 = i1.getName().toLowerCase();
+            String name2 = i2.getName().toLowerCase();
             return name1.compareTo(name2);
         }
     }

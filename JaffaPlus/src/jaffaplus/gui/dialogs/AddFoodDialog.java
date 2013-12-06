@@ -26,8 +26,8 @@ public class AddFoodDialog extends Dialog {
     
     private FoodFormatValidator formatValidator;
     
-    private final int FRAME_WIDTH = 400;
-    private final int FRAME_HEIGHT = 200;
+    private final int FRAME_WIDTH = 300;
+    private final int FRAME_HEIGHT = 220;
     
     public AddFoodDialog(MenuEditorPanel parentPanel, boolean editing) {
         this.formatValidator = new FoodFormatValidator();
@@ -46,7 +46,7 @@ public class AddFoodDialog extends Dialog {
     }
 
     private void initComponents() {
-        add(errorLabel, "push, align center, wrap");
+        add(errorLabel, "push, align center, span, wrap");
         showMessage("Vložte položku: ", false);
         initFormPanel();
         initButtonPanel();
@@ -58,20 +58,20 @@ public class AddFoodDialog extends Dialog {
         
         nameField = new JTextField();   
         nameField.addKeyListener(new TextFieldListener(nameField));
-        nameField.setPreferredSize(new Dimension(180, 24));
-        formPanel.add(new JLabel("Jméno: "));
-        formPanel.add(nameField, "wrap, grow");
+        nameField.setPreferredSize(new Dimension(220, 28));
+        formPanel.add(new JLabel("Název: "));
+        formPanel.add(nameField, "span, wrap, grow");
         
         priceField = new JTextField();   
         priceField.addKeyListener(new TextFieldListener(priceField));    
-        priceField.setPreferredSize(new Dimension(80, 24)); 
-        formPanel.add(new JLabel("Datum: "));
-        formPanel.add(priceField);
+        priceField.setPreferredSize(new Dimension(60, 28)); 
+        formPanel.add(new JLabel("Cena: "));
+        formPanel.add(priceField, "alignx left");
                 
         idField = new JTextField();  
         idField.addKeyListener(new TextFieldListener(idField));   
-        idField.setPreferredSize(new Dimension(50, 24));        
-        formPanel.add(new JLabel("Počet osob: "));
+        idField.setPreferredSize(new Dimension(60, 28));        
+        formPanel.add(new JLabel("ID: "));
         formPanel.add(idField, "wrap, push");                
         
         add(formPanel, "push, align center, wrap");   
