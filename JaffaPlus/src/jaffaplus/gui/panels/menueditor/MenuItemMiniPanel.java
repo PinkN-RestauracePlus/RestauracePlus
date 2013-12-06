@@ -1,6 +1,8 @@
-package jaffaplus.gui.panels;
+package jaffaplus.gui.panels.menueditor;
 
-import jaffaplus.collections.Order;
+import jaffaplus.collections.Item;
+import jaffaplus.gui.panels.Panel;
+import jaffaplus.gui.panels.PanelListener;
 import jaffaplus.source.GlobalValues;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -8,30 +10,33 @@ import java.awt.Font;
 import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+import net.miginfocom.swing.MigLayout;
 
 /**
  *
  * @author Hanzik
  */
-public class OrderMiniPanel extends Panel {
+public class MenuItemMiniPanel extends Panel {
     
     private boolean selected;
-    private Order order;
-    private TablePanel table;
+    private Item item;
+    private MenuEditorPanel parentPanel;
     
     private Panel idPanel, namePanel, pricePanel;
         
-    private final int PANEL_WIDTH = 350;
-    private final int PANEL_HEIGHT = 45;
-    private final int MARGIN = 2;
+    private final int PANEL_WIDTH = 600;
+    private final int PANEL_HEIGHT = 40;
     
-    public OrderMiniPanel(Order order, TablePanel table) {
+    public MenuItemMiniPanel(Item item, MenuEditorPanel panel) {
         
-        this.order = order;
-        this.table = table;
+        this.item = item;
+        this.parentPanel = panel;
         
         addMouseListener(new MiniPanelListener(this));
+        setLayout(new MigLayout());
+        
         setBorder(BorderFactory.createLineBorder(GlobalValues.BORDER_COLOR));
+        setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
         setMaximumSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
         
         initComponents();
@@ -41,67 +46,67 @@ public class OrderMiniPanel extends Panel {
         Font font;
         JLabel label;
         
-        int clmn1Width = 30;
-        int clmn2Width = 250;
-        int clmn3Width = 100;
+        int clmn1Width = 50;
+        int clmn2Width = 450;
+        int clmn3Width = 50;
         
         idPanel = new Panel();
-        idPanel.setPreferredSize(new Dimension(clmn1Width, PANEL_HEIGHT));
-        font = new Font("Calibri", Font.PLAIN, 14);
-        label = new JLabel("ID: " + order.getOrderNumber());
+        idPanel.setMinimumSize(new Dimension(clmn1Width, PANEL_HEIGHT - 10));
+        idPanel.setMaximumSize(new Dimension(clmn1Width, PANEL_HEIGHT - 10));
+        font = new Font("Calibri", Font.PLAIN, 12);
+        label = new JLabel(item.getId());
         label.setFont(font);
         idPanel.add(label);
         add(idPanel);
-        
-        add(new JLabel("|"));   
-        
+                
         namePanel = new Panel();
-        namePanel.setPreferredSize(new Dimension(clmn2Width, PANEL_HEIGHT));
+        namePanel.setMinimumSize(new Dimension(clmn2Width, PANEL_HEIGHT - 10));
+        namePanel.setMaximumSize(new Dimension(clmn2Width, PANEL_HEIGHT - 10));
+        namePanel.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 1, GlobalValues.BORDER_COLOR));
         font = new Font("Calibri", Font.PLAIN, 16);
-        label = new JLabel(order.getOrderName());
+        label = new JLabel(item.getName());
         label.setFont(font);
         namePanel.add(label);
         add(namePanel);
-                
-        add(new JLabel("|"));   
-        
+                        
         pricePanel = new Panel();
-        pricePanel.setPreferredSize(new Dimension(clmn3Width, PANEL_HEIGHT));
+        pricePanel.setMinimumSize(new Dimension(clmn3Width, PANEL_HEIGHT - 10));
+        pricePanel.setMaximumSize(new Dimension(clmn3Width, PANEL_HEIGHT - 10));
         font = new Font("Calibri", Font.BOLD, 16);
-        label = new JLabel(order.getTotalPrice() + ",-");
-        label.setFont(font);        
+        label = new JLabel(item.getPrice()+ ",-");
+        label.setFont(font);  
         pricePanel.add(label);
         add(pricePanel);
     }
-        
+    
     private void changeBackground(Color color) {
         setBackground(color);
         idPanel.setBackground(color);
         namePanel.setBackground(color);
-        pricePanel.setBackground(color);        
+        pricePanel.setBackground(color);
     }
     
     @Override
     public void selectPanel() {
         //Zrusi vyber posledniho zvoleneho panelu
-        if (table.getSelectedOrder() != null) {
-            table.getSelectedOrder().deselectPanel();
+        if (parentPanel.getSelectedItem() != null) {
+            parentPanel.getSelectedItem().deselectPanel();
         }
         //Vybere tento panel
         selected = true;
-        table.setSelectedOrder(this);
+        parentPanel.setSelectedItem(this);
         changeBackground(GlobalValues.BACKGROUND_COLOR_SELECTED);
     }
     
     @Override
     public void deselectPanel() {
         selected = false;
-        table.setSelectedOrder(null);
+        parentPanel.setSelectedItem(null);
         changeBackground(GlobalValues.BACKGROUND_COLOR);
     }
 
-    public Order getOrder() {
-        return order;
+    public Item getFood() {
+        return item;
     }
 
     @Override
@@ -111,22 +116,12 @@ public class OrderMiniPanel extends Panel {
     
     private class MiniPanelListener extends PanelListener {
 
-        private double lastClicked = 0;
-        private double DELAY = 500;
-        
         private MiniPanelListener(Panel panel) {
             super(panel);
         }
         
         @Override
         public void mouseReleased(MouseEvent e) {
-            double currentClick = System.currentTimeMillis();
-            
-            if (currentClick - lastClicked < DELAY) {
-                PanelSwitcher.getInstance().switchToPanel(new OrderPanel(order)); 
-            }
-            lastClicked = currentClick;
-                        
             if (selected) {
                 deselectPanel();
             } else {

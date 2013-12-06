@@ -2,15 +2,11 @@ package jaffaplus.gui.dialogs;
 
 import jaffaplus.collections.DataStorage;
 import jaffaplus.collections.Order;
-import jaffaplus.gui.buttons.Button;
-import jaffaplus.gui.buttons.ButtonListener;
 import jaffaplus.gui.panels.FoodSelectionPanel;
 import jaffaplus.gui.panels.OrderPanel;
 import jaffaplus.gui.panels.Panel;
 import jaffaplus.source.GlobalValues;
-import jaffaplus.source.Path;
 import java.awt.Dimension;
-import java.awt.event.MouseEvent;
 import javax.swing.*;
 
 /**
@@ -22,14 +18,11 @@ public class AddFoodDialog extends Dialog {
     private Order order;
     private OrderPanel panel;
     
-    private Panel searchPanel, buttonPanel;
+    private Panel searchPanel;
     private FoodSelectionPanel foodSelectionPanel;
     
     private JScrollPane scrollPane;
-    
-    private JTextField orderNameField;
-    private Button confirmButton, cancelButton;
-    
+        
     private final int FRAME_WIDTH = 400;
     private final int FRAME_HEIGHT = 500;
     
