@@ -5,13 +5,16 @@ import jaffaplus.collections.Item;
 import jaffaplus.collections.ItemList;
 import jaffaplus.gui.buttons.Button;
 import jaffaplus.gui.buttons.ButtonListener;
+import jaffaplus.gui.dialogs.AddFoodDialog;
 import jaffaplus.gui.panels.Panel;
 import jaffaplus.source.GlobalValues;
 import jaffaplus.source.Path;
+import jaffaplus.tools.SearchTool;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -22,8 +25,8 @@ import javax.swing.JTextField;
 public class MenuEditorPanel extends Panel {
     
     private ItemList completeList = DataStorage.getInstance().getFoodMenu();    
-    private Panel labelPanel, itemsPanel, searchPanel, bottomPanel;        
-    private MenuItemMiniPanel selectedItem;
+    private Panel labelPanel, itemsPanel, bottomPanel;        
+    private MenuItemMiniPanel selectedItemPanel;
     
     public MenuEditorPanel() {
         super();       
@@ -63,7 +66,7 @@ public class MenuEditorPanel extends Panel {
         JTextField searchField = new JTextField();
         searchField.setPreferredSize(new Dimension(width, height));
         searchField.setFont(new Font("Calibri", Font.PLAIN, 20));
-//        searchField.addKeyListener(new SearchFieldListener(completeList));
+        searchField.addKeyListener(new SearchFieldListener(completeList));
         
         bottomPanel.add(searchField);
     }        
@@ -102,12 +105,37 @@ public class MenuEditorPanel extends Panel {
         itemsPanel.revalidate();
     }
 
-    public MenuItemMiniPanel getSelectedItem() {
-        return selectedItem;
+    private void resetSelection() {
+        selectedItemPanel = null;
+    }
+    
+    private void refresh() {
+        displayItemsFromList(completeList);
+    }
+    
+    public MenuItemMiniPanel getSelectedItemPanel() {
+        return selectedItemPanel;
+    }
+    
+    public Item getSelectedItem() {
+        return selectedItemPanel.getItem();
     }
 
-    public void setSelectedItem(MenuItemMiniPanel selectedItem) {
-        this.selectedItem = selectedItem;
+    public void setSelectedItemPanel(MenuItemMiniPanel selectedItem) {
+        this.selectedItemPanel = selectedItem;
+    }
+    
+    private void createDialogWindow(boolean editing) {
+        //If editing existing booking
+        if (editing) {
+            AddFoodDialog dialog = new AddFoodDialog(this, editing);           
+        } else {
+            AddFoodDialog dialog = new AddFoodDialog(this, editing);            
+        }
+    }
+    
+    private void removeSelectedItem() {
+        completeList.remove(selectedItemPanel.getItem());
     }
     
     private class AddBookingButtonListener extends ButtonListener {
@@ -118,7 +146,9 @@ public class MenuEditorPanel extends Panel {
         
         @Override
         public void mouseReleased(MouseEvent e) {
-            //to do
+            createDialogWindow(false);
+            resetSelection();
+            refresh();
         }
     }
     
@@ -130,19 +160,52 @@ public class MenuEditorPanel extends Panel {
         
         @Override
         public void mouseReleased(MouseEvent e) {
-            //to do
+            /* Editujeme pouze pokud mame vybranou polozku. */
+            if (selectedItemPanel != null) {
+                createDialogWindow(true);
+                resetSelection();
+                refresh();
+            }
         }
     }
     
     private class RemoveBookingButtonListener extends ButtonListener {
-            
+        
         private RemoveBookingButtonListener(Button button) {
             super(button);
         }
         
         @Override
         public void mouseReleased(MouseEvent e) {
-            //to do
+            removeSelectedItem();
+            refresh();
         }
+    }
+    
+    private class SearchFieldListener implements KeyListener {
+        
+        private double lastInput = 0;
+        private double DELAY = 400;
+        
+        private SearchTool tool = new SearchTool();
+        
+        @Override
+        public void keyTyped(KeyEvent e) {
+            //do nothing
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            //do nothing
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            
+            
+            
+            tool 
+        }
+        
     }
 }

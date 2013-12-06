@@ -1,6 +1,5 @@
 package jaffaplus.gui.dialogs;
 
-import jaffaplus.calendar.MonthsOfYear;
 import jaffaplus.collections.Booking;
 import jaffaplus.collections.DataStorage;
 import jaffaplus.gui.panels.Panel;

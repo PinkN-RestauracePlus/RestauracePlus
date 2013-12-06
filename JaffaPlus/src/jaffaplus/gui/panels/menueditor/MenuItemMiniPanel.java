@@ -89,23 +89,23 @@ public class MenuItemMiniPanel extends Panel {
     @Override
     public void selectPanel() {
         //Zrusi vyber posledniho zvoleneho panelu
-        if (parentPanel.getSelectedItem() != null) {
-            parentPanel.getSelectedItem().deselectPanel();
+        if (parentPanel.getSelectedItemPanel() != null) {
+            parentPanel.getSelectedItemPanel().deselectPanel();
         }
         //Vybere tento panel
         selected = true;
-        parentPanel.setSelectedItem(this);
+        parentPanel.setSelectedItemPanel(this);
         changeBackground(GlobalValues.BACKGROUND_COLOR_SELECTED);
     }
     
     @Override
     public void deselectPanel() {
         selected = false;
-        parentPanel.setSelectedItem(null);
+        parentPanel.setSelectedItemPanel(null);
         changeBackground(GlobalValues.BACKGROUND_COLOR);
     }
 
-    public Item getFood() {
+    public Item getItem() {
         return item;
     }
 
@@ -115,13 +115,14 @@ public class MenuItemMiniPanel extends Panel {
     }
     
     private class MiniPanelListener extends PanelListener {
-
+        
         private MiniPanelListener(Panel panel) {
             super(panel);
         }
         
         @Override
         public void mouseReleased(MouseEvent e) {
+            
             if (selected) {
                 deselectPanel();
             } else {
