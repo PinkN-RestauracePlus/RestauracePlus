@@ -19,7 +19,7 @@ public class FoodMiniPanel extends Panel {
     
     private boolean selected;
     private Item item;
-    private OrderPanel order;
+    private OrderPanel parentPanel;
         
     private final int PANEL_WIDTH = 350;
     private final int PANEL_HEIGHT = 40;
@@ -28,7 +28,7 @@ public class FoodMiniPanel extends Panel {
     public FoodMiniPanel(Item item, OrderPanel order) {
         
         this.item = item;
-        this.order = order;
+        this.parentPanel = order;
         
         addMouseListener(new MiniPanelListener(this));
         setLayout(new MigLayout());
@@ -62,19 +62,19 @@ public class FoodMiniPanel extends Panel {
     @Override
     public void selectPanel() {
         //Zrusi vyber posledniho zvoleneho panelu
-        if (order.getSelectedFood() != null) {
-            order.getSelectedFood().deselectPanel();
+        if (parentPanel.getSelectedFood() != null) {
+            parentPanel.getSelectedFood().deselectPanel();
         }
         //Vybere tento panel
         selected = true;
-        order.setSelectedFood(this);
+        parentPanel.setSelectedFood(this);
         setBackground(GlobalValues.BACKGROUND_COLOR_SELECTED);
     }
     
     @Override
     public void deselectPanel() {
         selected = false;
-        order.setSelectedFood(null);
+        parentPanel.setSelectedFood(null);
         setBackground(GlobalValues.BACKGROUND_COLOR);
     }
 

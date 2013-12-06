@@ -1,6 +1,8 @@
 package jaffaplus.collections;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 
 /**
@@ -34,7 +36,21 @@ public class ItemList implements Iterable<Item> {
         }
         return null;
     }
+    
+    public ItemList getBySubstring(String name) {
+        ItemList newlist = new ItemList();
+        for (Item item : list) {
+            if (item.getName().contains(name)) {
+                newlist.add(item);
+            }
+        }
+        return newlist;
+    }
 
+    public void sortByName() {
+        Collections.sort(list, new NameComparator());
+    }
+    
     public void remove(Item item) {
         totalPrice -= item.getPrice();
         list.remove(item);
@@ -67,5 +83,16 @@ public class ItemList implements Iterable<Item> {
     @Override
     public Iterator<Item> iterator() {
         return list.iterator();
+    }
+    
+    /* Comparator that sorts items by name. */
+    private class NameComparator implements Comparator<Item> {
+        
+        @Override
+        public int compare(Item i1, Item i2) {
+            String name1 = i1.getName();
+            String name2 = i2.getName();
+            return name1.compareTo(name2);
+        }
     }
 }

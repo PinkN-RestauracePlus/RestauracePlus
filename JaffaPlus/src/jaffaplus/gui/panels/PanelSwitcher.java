@@ -2,6 +2,7 @@ package jaffaplus.gui.panels;
 
 import jaffaplus.JaffaPlus;
 import jaffaplus.gui.panels.calendar.CalendarPanel;
+import jaffaplus.gui.panels.menueditor.MenuEditorPanel;
 import jaffaplus.source.GlobalValues;
 
 /**
@@ -47,8 +48,7 @@ public class PanelSwitcher {
                 break;
             }
             case GlobalValues.PANEL_FOODMENU: {
-                //here is where we show food menu editor
-//                mainFrame.getContentPane().add(new TablePanel());
+                mainFrame.getContentPane().add(new MenuEditorPanel());
                 break;
             }
             case GlobalValues.PANEL_SUPPLIERS: {

@@ -7,8 +7,6 @@ import jaffaplus.gui.buttons.Button;
 import jaffaplus.gui.buttons.ButtonListener;
 import jaffaplus.source.GlobalValues;
 import jaffaplus.source.Path;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.MouseEvent;
