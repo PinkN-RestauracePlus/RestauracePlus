@@ -52,7 +52,7 @@ public class PanelSwitcher {
             }
             case GlobalValues.PANEL_SUPPLIERS: {
                 //here is where we show suppliers panel
-//                mainFrame.getContentPane().add(new CalendarPanel());
+                mainFrame.getContentPane().add(new SupplierEditorPanel());
                 break;
             }
         }       

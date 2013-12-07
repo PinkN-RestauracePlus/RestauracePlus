@@ -10,7 +10,7 @@ public class DataStorage {
     private BookingList booking;
     private ItemList foodMenu;
     private TableList tables;
-        
+    private SuppliersList suppliers;
     private static final DataStorage INSTANCE = new DataStorage();
         
     private DataStorage() {
@@ -39,6 +39,14 @@ public class DataStorage {
         this.tables = tables;
     }
 
+    public SuppliersList getSuppliers(){
+        return suppliers;
+    }
+    
+    public void setSuppliers(SuppliersList suppliers){
+        this.suppliers = suppliers;
+    }
+    
     public BookingList getBooking() {
         return booking;
     }
