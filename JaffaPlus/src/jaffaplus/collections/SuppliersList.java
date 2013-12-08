@@ -71,8 +71,8 @@ public class SuppliersList implements Iterable<Supplier> {
 
     /* For testing purposes only */
     public void fillList() {
-        add(new Supplier("Potraviny Goliáš", "984571", "Před Vodárnou 5, Praha 7, 17000", "847562147/0300"));
-        add(new Supplier("Nápoje Jelínek", "48750", "U přejeté srnky 12, Praha 2, 12000", "94752014/0100"));
+        add(new Supplier("Potraviny Goliáš", "984571", "Před Vodárnou 5, Praha 7, 17000","604412578", "847562147/0300"));
+        add(new Supplier("Nápoje Jelínek", "48750", "U přejeté srnky 12, Praha 2, 12000", "222014369", "94752014/0100"));
         
         sortByName();
     }

@@ -1,6 +1,7 @@
 package jaffaplus.gui.panels;
 
 import jaffaplus.collections.Supplier;
+import jaffaplus.gui.dialogs.AddSupplierDialog;
 import jaffaplus.source.GlobalValues;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -20,9 +21,9 @@ public class SuppliersMiniPanel extends Panel {
     private Supplier supp;
     private SupplierEditorPanel parentPanel;
     
-    private Panel idPanel, namePanel, addressPanel, bankAccPanel;
+    private Panel namePanel, addressPanel, phoneNumberPanel;
         
-    private final int PANEL_WIDTH = 800;
+    private final int PANEL_WIDTH = 700;
     private final int PANEL_HEIGHT = 40;
     
     public SuppliersMiniPanel(Supplier supp, SupplierEditorPanel panel) {
@@ -44,24 +45,14 @@ public class SuppliersMiniPanel extends Panel {
         Font font;
         JLabel label;
         
-        int clmn1Width = 100;
-        int clmn2Width = 150;
-        int clmn3Width = 275;
-        int clmn4Width = 200;
-        
-        idPanel = new Panel();
-        idPanel.setMinimumSize(new Dimension(clmn1Width, PANEL_HEIGHT - 10));
-        idPanel.setMaximumSize(new Dimension(clmn1Width, PANEL_HEIGHT - 10));
-        font = new Font("Calibri", Font.PLAIN, 16);
-        label = new JLabel(supp.getId());
-        label.setFont(font);
-        idPanel.add(label);
-        add(idPanel);
-                
+        int clmn1Width = 200;
+        int clmn2Width = 300;
+        int clmn3Width = 100;
+              
+                       
         namePanel = new Panel();
-        namePanel.setMinimumSize(new Dimension(clmn2Width, PANEL_HEIGHT - 10));
+        namePanel.setMinimumSize(new Dimension(clmn1Width, PANEL_HEIGHT - 10));
         namePanel.setMaximumSize(new Dimension(clmn2Width, PANEL_HEIGHT - 10));
-        namePanel.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 1, GlobalValues.BORDER_COLOR));
         font = new Font("Calibri", Font.PLAIN, 16);
         label = new JLabel(supp.getName());
         label.setFont(font);
@@ -69,31 +60,30 @@ public class SuppliersMiniPanel extends Panel {
         add(namePanel);
                         
         addressPanel = new Panel();
-        addressPanel.setMinimumSize(new Dimension(clmn3Width, PANEL_HEIGHT - 10));
-        addressPanel.setMaximumSize(new Dimension(clmn3Width, PANEL_HEIGHT - 10));
-        addressPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, GlobalValues.BORDER_COLOR));
+        addressPanel.setMinimumSize(new Dimension(clmn2Width, PANEL_HEIGHT - 10));
+        addressPanel.setMaximumSize(new Dimension(clmn2Width, PANEL_HEIGHT - 10));
+        addressPanel.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 1, GlobalValues.BORDER_COLOR));
         font = new Font("Calibri", Font.PLAIN, 16);
         label = new JLabel(supp.getAddress());
         label.setFont(font);  
         addressPanel.add(label);
         add(addressPanel);
         
-        bankAccPanel = new Panel();
-        bankAccPanel.setMinimumSize(new Dimension(clmn4Width, PANEL_HEIGHT - 10));
-        bankAccPanel.setMaximumSize(new Dimension(clmn4Width, PANEL_HEIGHT - 10));
+        phoneNumberPanel = new Panel();
+        phoneNumberPanel.setMinimumSize(new Dimension(clmn3Width, PANEL_HEIGHT - 10));
+        phoneNumberPanel.setMaximumSize(new Dimension(clmn3Width, PANEL_HEIGHT - 10));
         font = new Font("Calibri", Font.PLAIN, 16);
-        label = new JLabel(supp.getBankAcc());
+        label = new JLabel(supp.getPhoneNumber());
         label.setFont(font);  
-        bankAccPanel.add(label);
-        add(bankAccPanel);
+        phoneNumberPanel.add(label);
+        add(phoneNumberPanel);
     }
     
     private void changeBackground(Color color) {
         setBackground(color);
-        idPanel.setBackground(color);
         namePanel.setBackground(color);
         addressPanel.setBackground(color);
-        bankAccPanel.setBackground(color);
+        phoneNumberPanel.setBackground(color);
     }
     
     @Override
@@ -123,7 +113,9 @@ public class SuppliersMiniPanel extends Panel {
     public boolean isSelected() {
         return selected;
     }
-    
+    private void showInfo(){
+        AddSupplierDialog dialog = new AddSupplierDialog(parentPanel, true);
+    }
     private class MiniPanelListener extends PanelListener {
         
         private MiniPanelListener(Panel panel) {
@@ -132,12 +124,15 @@ public class SuppliersMiniPanel extends Panel {
         
         @Override
         public void mouseReleased(MouseEvent e) {
-            
+            if( e.getClickCount() == 2 ){
+                 showInfo();
+            }
             if (selected) {
                 deselectPanel();
             } else {
                 selectPanel();
             }
         }
+        
     }
 }
