@@ -63,7 +63,7 @@ public class AddFoodFromMenuDialog extends Dialog {
         searchPanel.setBackground(GlobalValues.BACKGROUND_COLOR_DIALOG);
         searchPanel.setPreferredSize(new Dimension(SEARCH_WIDTH, SEARCH_HEIGHT));
         
-        JLabel searchLabel = new JLabel("Hlgfhedat: ");
+        JLabel searchLabel = new JLabel("Hledat: ");
         searchField = new JTextField();        
         searchField.setPreferredSize(new Dimension(SEARCH_FIELD_WIDTH, SEARCH_HEIGHT));   
         searchField.addKeyListener(new SearchFieldListener());     
