@@ -10,7 +10,6 @@ import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 /**
@@ -23,7 +22,7 @@ public class AddSupplierDialog extends Dialog {
     private Supplier oldSupplier;
     private boolean editing;
     private JLabel errorLabel = new JLabel("");
-    private JTextField nameField, addressField, idField, bankAccField;
+    private JTextField nameField, addressField, idField, bankAccField, phoneNumberField;
     
        
     private final int FRAME_WIDTH = 400;
@@ -78,7 +77,13 @@ public class AddSupplierDialog extends Dialog {
         idField.addKeyListener(new AddSupplierDialog.TextFieldListener(idField));   
         idField.setPreferredSize(new Dimension(60, 28));        
         formPanel.add(new JLabel("IČO: "));
-        formPanel.add(idField, "span, wrap, grow");                
+        formPanel.add(idField, "span, wrap, grow");    
+        
+        phoneNumberField = new JTextField();  
+        phoneNumberField.addKeyListener(new AddSupplierDialog.TextFieldListener(phoneNumberField));   
+        phoneNumberField.setPreferredSize(new Dimension(60, 28));        
+        formPanel.add(new JLabel("Telefon: "));
+        formPanel.add(phoneNumberField, "span, wrap, grow");      
         
         
         
@@ -89,6 +94,7 @@ public class AddSupplierDialog extends Dialog {
         nameField.setText(supp.getName());
         addressField.setText(supp.getAddress());
         idField.setText(supp.getId());
+        phoneNumberField.setText(supp.getPhoneNumber());
         bankAccField.setText(supp.getBankAcc());
     }
     
@@ -108,7 +114,7 @@ public class AddSupplierDialog extends Dialog {
         nameField.setBackground(Color.red);
         }
         else{
-            Supplier newSupp = new Supplier ( nameField.getText(), idField.getText(), addressField.getText(), bankAccField.getText());
+            Supplier newSupp = new Supplier ( nameField.getText(), idField.getText(), addressField.getText(), phoneNumberField.getText(), bankAccField.getText());
             DataStorage.getInstance().getSuppliers().add(newSupp);
             if (editing && oldSupplier != null) {
                 DataStorage.getInstance().getSuppliers().remove(oldSupplier);

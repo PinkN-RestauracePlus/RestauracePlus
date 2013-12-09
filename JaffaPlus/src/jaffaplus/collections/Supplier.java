@@ -10,9 +10,9 @@ public class Supplier {
     private String id;
     private String address;
     private String bankAcc;
-    
-    
-       
+    private String phoneNumber;
+
+        
     public Supplier(String name, String id) {
         this.name = name;
         this.id = id;
@@ -24,13 +24,20 @@ public class Supplier {
         this.address = address;
     }
     
-    public Supplier(String name, String id, String address, String bankAcc) {
+    public Supplier(String name, String id, String address, String phoneNumber) {
+        this.name = name;
+        this.id = id;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+    }
+    
+    public Supplier(String name, String id, String address, String phoneNumber, String bankAcc) {
         this.name = name;
         this.id = id;
         this.address = address;
         this.bankAcc = bankAcc;
+        this.phoneNumber = phoneNumber;
     }
-    
        
     public String getName() {
         return name;
@@ -62,6 +69,14 @@ public class Supplier {
 
     public void setBankAcc(String bankAcc) {
         this.bankAcc = bankAcc;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
    

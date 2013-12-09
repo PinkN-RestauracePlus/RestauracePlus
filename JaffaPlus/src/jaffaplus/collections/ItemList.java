@@ -97,6 +97,10 @@ public class ItemList implements Iterable<Item> {
     public Iterator<Item> iterator() {
         return list.iterator();
     }
+
+    public boolean isEmpty() {
+       return list.isEmpty();
+    }
     
     /* Comparator that sorts items by name. */
     private class NameComparator implements Comparator<Item> {
