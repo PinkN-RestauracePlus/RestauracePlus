@@ -13,13 +13,11 @@ import jaffaplus.collections.TableList;
  */
 public class AppInitiator {
     
-    public AppInitiator() {
-        
-        initObjects();
-    }    
+    public AppInitiator() {        
+        initCollections();
+    }        
     
-    
-    private void initObjects() {
+    private void initCollections() {
         
         ItemList foodMenu = new ItemList();
         foodMenu.fillList();
@@ -29,7 +27,7 @@ public class AppInitiator {
         bookingList.fillList();
         SuppliersList suppliers = new SuppliersList();
         suppliers.fillList();
-        
+                
         DataStorage.getInstance().setFoodMenu(foodMenu);
         DataStorage.getInstance().setTables(tableList);
         DataStorage.getInstance().setBooking(bookingList);
